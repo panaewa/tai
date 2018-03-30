@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/angular
 /.idea
 /.vscode
 /.vagrant
