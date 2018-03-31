@@ -22,3 +22,5 @@ Auth::routes();
 
 Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
+
+Route::resource('ticker', 'TickerController');
