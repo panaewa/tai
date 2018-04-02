@@ -14,6 +14,7 @@ return [
 
     'name' => 'Name',
     'esin' => 'ESIN',
-    'google_symbol' => 'Google symbol'
+    'google_symbol' => 'Google symbol',
+    'url' => 'Corporate site'
 
 ];

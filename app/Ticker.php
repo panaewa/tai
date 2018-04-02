@@ -12,5 +12,11 @@ class Ticker extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','esin','google_symbol'];
+    protected $fillable = ['name','esin','google_symbol','url'];
+
+
+    public function  getColumns()
+    {
+        return $this->fillable;
+    }
 }

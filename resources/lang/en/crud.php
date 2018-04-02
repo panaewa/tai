@@ -14,5 +14,9 @@ return [
 
     'create' => 'Create',
     'edit' => 'Edit',
+    'show' => 'Show',
+    'destroy' => 'Delete',
+    'back' => 'Back',
+    'actions' => 'Actions'
 
 ];

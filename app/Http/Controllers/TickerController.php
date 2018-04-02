@@ -26,9 +26,14 @@ class TickerController extends Controller
      */
     public function index()
     {
-        $tickers = Ticker::all();
+        $t = new Ticker();
 
-        return view('ticker.index', compact('tickers'));
+        $list = $t->all();
+        $columns = $t->getColumns();
+        $slug = 'ticker';
+        $title = 'Ticker';
+
+        return view('ticker.index', compact('list','columns','slug','title'));
     }
 
     /**
@@ -76,6 +81,9 @@ class TickerController extends Controller
     public function show($id)
     {
         //
+        $ticker = Ticker::find($id);
+
+        return view('ticker.show', compact('ticker'));
     }
 
     /**
@@ -87,6 +95,9 @@ class TickerController extends Controller
     public function edit($id)
     {
         //
+        $ticker = Ticker::find($id);
+
+        return view('ticker.edit', compact('ticker'));
     }
 
     /**
@@ -99,6 +110,12 @@ class TickerController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $ticker= Ticker::find($id);
+        $ticker->name           = $request->get('name');
+        $ticker->esin           = $request->get('esin');
+        $ticker->google_symbol  = $request->get('google_symbol');
+        $ticker->save();
+        return redirect('ticker');
     }
 
     /**
@@ -110,5 +127,11 @@ class TickerController extends Controller
     public function destroy($id)
     {
         //
+        $ticker = Ticker::find($id);
+
+        $ticker->delete();
+
+        return redirect('/ticker')->with('success','Information has been deleted');
+        
     }
 }

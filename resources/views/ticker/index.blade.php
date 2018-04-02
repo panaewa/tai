@@ -5,23 +5,39 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Tickers List</div>
+                <div class="card-header">{{ $title }} List <a href="/{{ $slug }}/create" class="btn btn-primary">@lang('crud.create')</a></div>
 
                 <div class="card-body">
+                <br />
+                    @if (\Session::has('success'))
+                    <div class="alert alert-success">
+                        <p>{{ \Session::get('success') }}</p>
+                    </div><br />
+                    @endif
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>@lang('ticker.name')</th>
-                                <th>@lang('ticker.esin')</th>
-                                <th>@lang('ticker.google_symbol')</th>
+                                @foreach($columns as $col)
+                                <th>@lang($slug.'.'.$col)</th>
+                                 @endforeach        
+                                <th>@lang('crud.actions')</th>                    
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($tickers as $ticker)
+                            @foreach($list as $obj)
                             <tr>
-                                <td>{{ $ticker->name }}</td>
-                                <td>{{ $ticker->esin }}</td>
-                                <td>{{ $ticker->google_symbol }}</td>
+                                @foreach($columns as $col)
+                                <td>{{ $obj->$col }}</td>
+                                @endforeach     
+                                <td>
+                                    <a href="/{{ $slug }}/{{ $obj->id }}" class="btn btn-primary">@lang('crud.show')</a>
+                                    <a href="/{{ $slug }}/{{ $obj->id }}/edit" class="btn btn-primary">@lang('crud.edit')</a>
+                                    <form method="POST" action="/{{ $slug }}/{{ $obj->id }}" class="d-inline">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-danger">@lang('crud.destroy')</button>
+                                    </form>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
