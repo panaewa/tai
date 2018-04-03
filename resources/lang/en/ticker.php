@@ -15,6 +15,7 @@ return [
     'name' => 'Name',
     'esin' => 'ESIN',
     'google_symbol' => 'Google symbol',
-    'url' => 'Corporate site'
+    'url' => 'Corporate site',
+    'link_title' => 'Links'
 
 ];

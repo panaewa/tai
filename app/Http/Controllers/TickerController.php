@@ -3,21 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\CrudController;
 use App\Ticker;
 
-class TickerController extends Controller
+class TickerController extends CrudController
 {
+    /**
+     * Mode
+     *
+     * @var string
+     */
+    protected $redirectTo = '/home';
+
+
     /**
      * Create a new controller instance.
      *
+     * @param App\Ticker $obj
      * @return void
      */
-    public function __construct()
+    public function __construct(Ticker $obj)
     {
         //$this->middleware('auth');
+        $this->obj = $obj;
+        $this->slug = 'ticker';
+        $this->title = 'Ticker';
         
     }
-
 
     /**
      * Display a listing of the resource.
@@ -26,14 +38,10 @@ class TickerController extends Controller
      */
     public function index()
     {
-        $t = new Ticker();
+        //
+        $list = $this->obj->all();
 
-        $list = $t->all();
-        $columns = $t->getColumns();
-        $slug = 'ticker';
-        $title = 'Ticker';
-
-        return view('ticker.index', compact('list','columns','slug','title'));
+        return $this->render('index', compact('list'));
     }
 
     /**
@@ -44,7 +52,8 @@ class TickerController extends Controller
     public function create()
     {
         //
-        return view('ticker.create');
+        return $this->render('create');
+
     }
 
     /**
@@ -56,81 +65,62 @@ class TickerController extends Controller
     public function store(Request $request)
     {
         //
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'esin' => 'required|unique:tickers',
-            'google_symbol' => 'required'
-        ]);
-
-        $ticker = new Ticker();
+        $request->validate($this->obj->getValidations());
   
-        $ticker->create([
-            'name' => $request->get('name'),
-            'esin' => $request->get('esin'),
-            'google_symbol' => $request->get('google_symbol')
-        ]);
+        $this->save($request, $this->obj);
+
         return redirect('/ticker');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param App\Ticker $obj
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Ticker $obj)
     {
         //
-        $ticker = Ticker::find($id);
-
-        return view('ticker.show', compact('ticker'));
+        return view('ticker.show', [ 'obj' => $obj ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param App\Ticker $obj
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Ticker $obj)
     {
         //
-        $ticker = Ticker::find($id);
 
-        return view('ticker.edit', compact('ticker'));
+        return $this->render('edit', [ 'obj' => $obj]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param App\Ticker $obj
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Ticker $obj)
     {
         //
-        $ticker= Ticker::find($id);
-        $ticker->name           = $request->get('name');
-        $ticker->esin           = $request->get('esin');
-        $ticker->google_symbol  = $request->get('google_symbol');
-        $ticker->save();
-        return redirect('ticker');
+        $this->save($request, $obj);
+
+        return redirect($this->slug);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param App\Ticker $obj
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ticker $obj)
     {
-        //
-        $ticker = Ticker::find($id);
-
-        $ticker->delete();
-
+        $obj->delete();
         return redirect('/ticker')->with('success','Information has been deleted');
         
     }

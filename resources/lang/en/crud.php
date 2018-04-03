@@ -17,6 +17,7 @@ return [
     'show' => 'Show',
     'destroy' => 'Delete',
     'back' => 'Back',
-    'actions' => 'Actions'
+    'actions' => 'Actions',
+    'send' => 'Send',
 
 ];
