@@ -20,14 +20,14 @@
       <label for="{{ $col }}FormInput" class="col-sm-2 col-form-label col-form-label-lg">@lang($slug.'.'.$col)</label>
       <div class="col-sm-10">
         <input type="text" class="form-control form-control-lg" id="{{ $col }}FormInput" placeholder="@lang($slug.'.'.$col)" name="{{ $col }}"
-        value="{{ $obj->$col }}">
+        value="{{ $obj->{$col} }}">
       </div>
     </div>
     @endforeach
 
     <div class="form-group row">
         <div class="col-md-12">
-            <a href="/ticker" class="btn btn-primary">@lang('crud.back')</a>
+            <a href="/{{ $slug }}" class="btn btn-primary">@lang('crud.back')</a>
             <input type="submit" class="btn btn-primary" value="@lang('crud.send')">
         </div>
     </div>

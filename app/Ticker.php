@@ -12,7 +12,7 @@ class Ticker extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','esin','google_symbol','url'];
+    protected $fillable = ['name','esin','google_symbol','url','yahoo_symbol'];
 
     protected $cofig = [
         'fields' => [
@@ -30,6 +30,11 @@ class Ticker extends Model
                     'edit',
                     'create'
                 ]
+            ],
+            'yahoo_symbol' => [
+                'view' => [
+                    'all',
+                ]
             ]
         ]
     ];
@@ -44,7 +49,8 @@ class Ticker extends Model
                 return [
                     'name',
                     'esin',
-                    'google_symbol'
+                    'google_symbol',
+                    'yahoo_symbol'
                 ];
                 break;
             
@@ -53,6 +59,7 @@ class Ticker extends Model
                     'name',
                     'esin',
                     'google_symbol',
+                    'yahoo_symbol',
                     'url'
                 ];
                 break;

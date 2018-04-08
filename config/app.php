@@ -162,7 +162,9 @@ return [
 
         // Other service providers...
         Laravel\Socialite\SocialiteServiceProvider::class,
-        Chumper\Zipper\ZipperServiceProvider::class,
+
+        // CRON JOBS
+        Chumper\Zipper\ZipperServiceProvider::class
 
     ],
 
@@ -215,6 +217,8 @@ return [
 
         // Other aliases...
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+
+        // CRON JOBS
         'Zipper' => Chumper\Zipper\Zipper::class,
 
     ],

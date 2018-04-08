@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CrudController;
 use App\Ticker;
+use Scheb\YahooFinanceApi\ApiClient;
+use Scheb\YahooFinanceApi\ApiClientFactory;
+use GuzzleHttp\Client;
 
 class TickerController extends CrudController
 {
@@ -81,7 +84,11 @@ class TickerController extends CrudController
     public function show(Ticker $obj)
     {
         //
-        return view('ticker.show', [ 'obj' => $obj ]);
+        $client = ApiClientFactory::createApiClient();
+        //$historicalData = $client->getHistoricalData($obj->yahoo_symbol, ApiClient::INTERVAL_1_DAY, new \DateTime("-1000 days"), new \DateTime("-990 days"));
+        $quote = $client->getQuote($obj->yahoo_symbol);
+
+        return $this->render('show', [ 'obj' => $obj, 'quote' => $quote ]);
     }
 
     /**
