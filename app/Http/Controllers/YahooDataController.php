@@ -13,9 +13,8 @@ class YahooDataController extends Controller
     public function index($quote = 'TEF.MC')
     {
         $client = ApiClientFactory::createApiClient();
-        $historicalData = $client->getHistoricalData("TEF.MC", ApiClient::INTERVAL_1_DAY, new \DateTime("-1000 days"), new \DateTime("-990 days"));
-        $quote = $client->getQuote($quote);
-        return view('data.result',compact('quote'));
+        $historicalData = $client->getHistoricalData($quote, ApiClient::INTERVAL_1_DAY, new \DateTime("-200 days"), new \DateTime("today"));
+        return view('data.result',compact('historicalData'));
     }    
     
 }

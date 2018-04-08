@@ -26,5 +26,7 @@ Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallba
 Route::resource('ticker', 'TickerController');
 Route::model('ticker', 'App\Ticker');
 
+
+
 Route::get('/download/{quote}', 'MeffCronController@download');
-Route::get('/yahoo/{quote?}', 'YahooDataController@index');
+Route::get('/yahoo/data/{quote?}', 'YahooDataController@index');

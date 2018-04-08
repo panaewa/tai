@@ -85,10 +85,10 @@ class TickerController extends CrudController
     {
         //
         $client = ApiClientFactory::createApiClient();
-        //$historicalData = $client->getHistoricalData($obj->yahoo_symbol, ApiClient::INTERVAL_1_DAY, new \DateTime("-1000 days"), new \DateTime("-990 days"));
+        $historicalData = $client->getHistoricalData($obj->yahoo_symbol, ApiClient::INTERVAL_1_DAY, new \DateTime("-200 days"), new \DateTime("today"));
         $quote = $client->getQuote($obj->yahoo_symbol);
 
-        return $this->render('show', [ 'obj' => $obj, 'quote' => $quote ]);
+        return $this->render('show', [ 'obj' => $obj, 'quote' => $quote, 'historicalData' => $historicalData ]);
     }
 
     /**
